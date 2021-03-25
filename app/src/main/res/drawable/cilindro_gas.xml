@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="154.46dp"
+    android:height="240.69dp"
+    android:viewportWidth="154.46"
+    android:viewportHeight="240.69">
+    <group
+        android:translateX="-467.52"
+        android:translateY="-734.9">
+        <path
+            android:fillColor="#fff"
+            android:pathData="M566.18 741.56V790.8s18.46 -0.62 20 -2.62V741.56Z" />
+    </group>
+    <group
+        android:translateX="-467.52"
+        android:translateY="-734.9">
+        <path
+            android:fillColor="#fff"
+            android:pathData="M544.75 744.15c-12.49 0 -24.25 -0.29 -33.09 -0.82 -4.34 -0.25 -7.75 -0.56 -10.15 -0.89s-5.25 -0.74 -5.25 -2.91 2.79 -2.57 5.25 -2.91 5.81 -0.64 10.15 -0.9c8.84 -0.53 20.6 -0.82 33.09 -0.82s24.25 0.29 33.09 0.82c4.34 0.26 7.75 0.56 10.15 0.9s5.25 0.74 5.25 2.91 -2.79 2.56 -5.25 2.91 -5.81 0.64 -10.15 0.89C569 743.86 557.24 744.15 544.75 744.15Zm-34.84 -4.62c7.69 0.52 19.4 0.93 34.84 0.93s27.15 -0.41 34.84 -0.93c-7.69 -0.52 -19.4 -0.93 -34.84 -0.93S517.6 739 509.91 739.53Z" />
+    </group>
+    <group
+        android:translateX="-467.52"
+        android:translateY="-734.9">
+        <path
+            android:fillColor="#fff"
+            android:pathData="M523.32 741.56V790.8s-18.46 -0.62 -20 -2.62V741.56Z" />
+    </group>
+    <path
+        android:fillColor="#fff"
+        android:pathData="M77.23 50.78L59.11 50.78 59.11 1.9 77.23 1.9 95.35 1.9 95.35 50.78 77.23 50.78Z" />
+    <group
+        android:translateX="-467.52"
+        android:translateY="-734.9">
+        <path
+            android:fillColor="#fff"
+            android:pathData="M608.34 800.34c-20.08 -20.08 -63.59 -20 -63.59 -20s-43.51 -0.11 -63.59 20a49.62 49.62 0 0 0 -13.62 35.77l1.16 56.78S468.91 922.14 490 937c-1 8 -1.34 16.26 0.67 19.94 0 0 6.08 17.85 54.05 18.62 48 -0.77 54 -18.62 54 -18.62 2 -3.68 1.66 -12 0.67 -19.94 21.12 -14.9 21.33 -44.15 21.33 -44.15L622 836.11A49.62 49.62 0 0 0 608.34 800.34ZM523.23 952a3 3 0 0 1 -3.59 2.15l-19.1 -4.84a3 3 0 0 1 1.46 -5.74l0.27 0.06 18.82 4.78a3 3 0 0 1 2.14 3.59Zm62.65 -2l-19.09 4.84a3 3 0 0 1 -3 -4.8 2.87 2.87 0 0 1 1.51 -0.94l19.09 -4.84a3.1 3.1 0 0 1 1.32 0 3 3 0 0 1 0.14 5.77Z" />
+    </group>
+</vector>
