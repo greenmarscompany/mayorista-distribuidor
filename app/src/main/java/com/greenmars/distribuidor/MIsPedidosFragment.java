@@ -3,6 +3,7 @@ package com.greenmars.distribuidor;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,8 +18,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -28,6 +34,10 @@ import com.greenmars.distribuidor.model.Account;
 import com.greenmars.distribuidor.util.ProductRegister;
 import com.greenmars.distribuidor.util.SortbyProductRegister;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,6 +57,7 @@ public class MIsPedidosFragment extends Fragment {
     private ArrayList<ProductRegister> mispedidos_list;
     private MIsPedidosAdapter mIsPedidosAdapter;
     private View view;
+    private static final String TAG = Variable.TAG;
 
     public MIsPedidosFragment() {
         // Required empty public constructor
@@ -108,7 +119,24 @@ public class MIsPedidosFragment extends Fragment {
                     Collections.sort(mispedidos_list, new SortbyProductRegister());
                     mIsPedidosAdapter = new MIsPedidosAdapter(mispedidos_list, MIsPedidosFragment.this);
                     recyclerView.setAdapter(mIsPedidosAdapter);
-                }, error -> Toast.makeText(getContext(), "That didn't work!", Toast.LENGTH_SHORT).show()) {
+                },
+                error -> {
+                    Log.d(Variable.TAG, "Listar: " + error.toString());
+                    NetworkResponse response = error.networkResponse;
+                    if (response != null) {
+                        if (error instanceof ServerError) {
+                            try {
+                                String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                JSONObject obj = new JSONObject(res);
+                                Log.d(TAG, "Voley post: " + obj.toString());
+                            } catch (JSONException | UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                        } else if (error instanceof TimeoutError) {
+                            Toast.makeText(getContext(), "Opss timeout, verifique su conectividad", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -119,6 +147,11 @@ public class MIsPedidosFragment extends Fragment {
                 return headers;
             }
         };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                Variable.MY_DEFAULT_TIMEOUT,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
         queue.add(stringRequest);
 
         EditText txtFilterProduct = view.findViewById(R.id.txtBuscarProductos);

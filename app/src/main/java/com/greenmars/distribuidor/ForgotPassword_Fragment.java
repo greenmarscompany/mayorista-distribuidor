@@ -17,10 +17,13 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
@@ -140,25 +143,36 @@ public class ForgotPassword_Fragment extends Fragment implements
                     }, error -> {
                         Log.d("Volley get", "error voley" + error.toString());
                         NetworkResponse response = error.networkResponse;
-                        if (error instanceof ServerError && response != null) {
-                            try {
-                                String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                // Now you can use any deserializer to make sense of data
-                                JSONObject obj = new JSONObject(res);
-                                Log.d("Voley post", obj.toString());
-                                ocultarProgress();
-                                if (!obj.getString("email").equals("")) {
-                                    Toast.makeText(getContext(),
-                                            obj.getJSONArray("email")
-                                                    .getString(0), Toast.LENGTH_SHORT)
-                                            .show();
-                                }
+                        if (response != null) {
+                            if (error instanceof ServerError) {
+                                try {
+                                    String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                    // Now you can use any deserializer to make sense of data
+                                    JSONObject obj = new JSONObject(res);
+                                    Log.d("Voley post", obj.toString());
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                                    if (!obj.getString("email").equals("")) {
+                                        Toast.makeText(getContext(),
+                                                obj.getJSONArray("email")
+                                                        .getString(0), Toast.LENGTH_SHORT)
+                                                .show();
+                                    }
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                                Toast.makeText(getContext(), "Por favor verifique su conexion", Toast.LENGTH_LONG).show();
                             }
+                            ocultarProgress();
                         }
+
                     });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    Variable.MY_DEFAULT_TIMEOUT,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
             queue.add(jsonObjectRequest);
         }
     }

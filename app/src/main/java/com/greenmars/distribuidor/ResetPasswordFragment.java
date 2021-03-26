@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -159,12 +160,21 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                                             "El código ingresado es incorrecto :(");
                                 }
 
+                                if (mensajes.length() > 0) {
+                                    new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view, mensajes.toString());
+                                }
+
                                 ocultarProgress();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     });
+            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    Variable.MY_DEFAULT_TIMEOUT,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
             queue.add(jsonObjectRequest);
         }
     }
