@@ -85,8 +85,8 @@ public class DetailproductAdapter extends RecyclerView.Adapter<DetailproductAdap
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             product_name = itemView.findViewById(R.id.gas_camion_name);
-            txtMarca = itemView.findViewById(R.id.txtMarca);
-            txtUnidadMedida = itemView.findViewById(R.id.txtUnidadMedida);
+            /*txtMarca = itemView.findViewById(R.id.txtMarca);
+            txtUnidadMedida = itemView.findViewById(R.id.txtUnidadMedida);*/
             etxtPrecioUnitario = itemView.findViewById(R.id.etxtPrecioUnitario);
             image_product = itemView.findViewById(R.id.marcas_product);
             btnguardar_misproductos = itemView.findViewById(R.id.guardar_misproductos);
@@ -95,8 +95,8 @@ public class DetailproductAdapter extends RecyclerView.Adapter<DetailproductAdap
         void bind(final ProductGas products) {
 
             product_name.setText(products.getDescription().replace("Ã±", "ñ"));
-            txtMarca.setText(products.getMarke_id().getName());
-            txtUnidadMedida.setText(" " + products.getUnit_measurement_id().getName());
+            // txtMarca.setText(products.getMarke_id().getName());
+            // txtUnidadMedida.setText(" " + products.getUnit_measurement_id().getName());
             etxtPrecioUnitario.setText("0.00");
             Picasso.get().load(products.getImage()).into(image_product);
             btnguardar_misproductos.setOnClickListener(new View.OnClickListener() {

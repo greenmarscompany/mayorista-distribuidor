@@ -38,7 +38,7 @@
             app:layout_constraintStart_toEndOf="@+id/marcas_product"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,32 +62,32 @@
             app:layout_constraintBottom_toTopOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/gas_camion_name" />
+            app:layout_constraintTop_toBottomOf="@+id/gas_camion_name" />-->
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:text="Unidad de Medida"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/etxtPrecioUnitario"
-            app:layout_constraintEnd_toStartOf="@+id/txtUnidadMedida"
-            app:layout_constraintStart_toEndOf="@+id/marcas_product"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <!-- <TextView
+             android:id="@+id/textView9"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="4dp"
+             android:layout_marginLeft="4dp"
+             android:text="Unidad de Medida"
+             android:textSize="10sp"
+             app:layout_constraintBottom_toTopOf="@+id/etxtPrecioUnitario"
+             app:layout_constraintEnd_toStartOf="@+id/txtUnidadMedida"
+             app:layout_constraintStart_toEndOf="@+id/marcas_product"
+             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
-            android:id="@+id/txtUnidadMedida"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="Unidad de Medida"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/txtMarca" />
+         <TextView
+             android:id="@+id/txtUnidadMedida"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_marginEnd="8dp"
+             android:layout_marginRight="8dp"
+             android:text="Unidad de Medida"
+             android:textSize="10sp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toEndOf="@+id/textView9"
+             app:layout_constraintTop_toBottomOf="@+id/txtMarca" />-->
 
         <TextView
             android:id="@+id/textView11"
@@ -95,17 +95,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
             android:text="Precio Unitario: "
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintEnd_toStartOf="@+id/etxtPrecioUnitario"
             app:layout_constraintStart_toEndOf="@+id/marcas_product"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/gas_camion_name" />
 
         <EditText
             android:id="@+id/etxtPrecioUnitario"
             android:layout_width="72dp"
             android:layout_height="20dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/custom_cantidad"
             android:ems="10"
             android:gravity="center"
@@ -113,7 +115,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/textView13"
             app:layout_constraintStart_toEndOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/txtUnidadMedida"
+            app:layout_constraintTop_toBottomOf="@+id/gas_camion_name"
             app:layout_constraintVertical_bias="0.6" />
 
         <!--<TextView

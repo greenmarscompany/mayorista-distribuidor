@@ -119,10 +119,7 @@ public class HomeActivity extends AppCompatActivity implements TaskLoadedCallbac
         MenuItem actionFacturacion = menu.findItem(R.id.action_facturacion);
 
         usuarioItem.setVisible(cuenta.getType() == 1);
-        System.out.println("probandomenu : " + cuenta.getUrl_facturacion());
-        if (cuenta.getUrl_facturacion() == null || cuenta.getUrl_facturacion().equals("")) {
-            actionFacturacion.setVisible(false);
-        }
+
 
         return true;
     }

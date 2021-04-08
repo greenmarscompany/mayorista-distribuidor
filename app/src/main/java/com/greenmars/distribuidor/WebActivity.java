@@ -2,6 +2,7 @@ package com.greenmars.distribuidor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,12 +15,13 @@ public class WebActivity extends AppCompatActivity {
 
     private DatabaseHelper db;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
-
+        String urlDefault = "https://facturanegocios.com";
         this.db = new DatabaseHelper(getApplicationContext());
 
         WebView webView = findViewById(R.id.webview);
@@ -29,8 +31,13 @@ public class WebActivity extends AppCompatActivity {
 
         Account account = db.getAcountToken();
         if (account != null) {
-            webView.loadUrl(account.getUrl_facturacion());
+            if (account.getUrl_facturacion() != null && !account.getUrl_facturacion().equals("")) {
+                webView.loadUrl(account.getUrl_facturacion());
+            } else {
+                webView.loadUrl(urlDefault);
+            }
         }
+
 
     }
 
