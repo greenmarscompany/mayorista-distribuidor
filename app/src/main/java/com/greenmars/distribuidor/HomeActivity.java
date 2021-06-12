@@ -218,7 +218,7 @@ public class HomeActivity extends AppCompatActivity implements TaskLoadedCallbac
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "JWT " + token);
-                headers.put("Content-Type", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };

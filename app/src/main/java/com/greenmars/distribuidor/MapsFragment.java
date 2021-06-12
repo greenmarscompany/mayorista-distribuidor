@@ -591,7 +591,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                 String token = db.getToken();
                 Log.d("Voley get", token);
                 headers.put("Authorization", "JWT " + token);
-                headers.put("Content-Type", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };

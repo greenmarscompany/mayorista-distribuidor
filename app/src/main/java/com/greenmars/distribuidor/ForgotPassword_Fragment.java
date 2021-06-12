@@ -27,6 +27,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.nkzawa.global.Global;
 import com.greenmars.distribuidor.util.CustomToast;
 
 import org.json.JSONException;
@@ -147,6 +148,7 @@ public class ForgotPassword_Fragment extends Fragment implements
                             if (error instanceof ServerError) {
                                 try {
                                     String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                    Log.d(Variable.TAG, "submitButtonTask: " + res);
                                     // Now you can use any deserializer to make sense of data
                                     JSONObject obj = new JSONObject(res);
                                     Log.d("Voley post", obj.toString());

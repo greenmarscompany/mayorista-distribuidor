@@ -371,6 +371,12 @@ public class PedidoActivity extends AppCompatActivity {
                                 case "tunki-boleta":
                                     txtComprobante.setText("Tunki (Boleta) \n");
                                     break;
+                                case "reciclaje-boleta":
+                                    txtComprobante.setText("Pagara con Reciclaje(Boleta) \n");
+                                    break;
+                                case "reciclaje-factura":
+                                    txtComprobante.setText("Pagara con Reciclaje(Factura) \n");
+                                    break;
                             }
 
                             prod.put("producto", obj.getJSONObject("product_id").getString("description"));
@@ -440,7 +446,7 @@ public class PedidoActivity extends AppCompatActivity {
                 String token = db.getToken();
                 Log.d("Voley get", token);
                 headers.put("Authorization", "JWT " + token);
-                headers.put("Content-Type", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };

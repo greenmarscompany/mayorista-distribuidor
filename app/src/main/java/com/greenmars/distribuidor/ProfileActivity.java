@@ -169,7 +169,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Map<String, String> headers = new HashMap<>();
                 Log.d(Variable.TAG, "getHeaders: " + cuenta.getToken());
                 headers.put("Authorization", "JWT " + cuenta.getToken());
-                headers.put("Content-Type", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };

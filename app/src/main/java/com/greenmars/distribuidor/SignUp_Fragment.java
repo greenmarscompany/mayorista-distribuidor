@@ -594,6 +594,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             object.put("name", name);
             object.put("latitude", latitude);
             object.put("longitude", longitude);
+            object.put("longitude", longitude);
+            object.put("url_facturacion", "");
             object.put("token_device", FirebaseMessagingService.getToken(getContext()));
 
             Log.d("Voley post propietario", object.toString());

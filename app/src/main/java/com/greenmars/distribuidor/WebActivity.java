@@ -21,7 +21,7 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
-        String urlDefault = "https://facturanegocios.com";
+        String urlDefault = "https://greenmars.facturanegocios.com";
         this.db = new DatabaseHelper(getApplicationContext());
 
         WebView webView = findViewById(R.id.webview);

@@ -53,6 +53,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+        Log.d(Variable.TAG, "onMessageReceived: " + remoteMessage);
         DatabaseHelper db = new DatabaseHelper(getApplicationContext());
         if (db.getToken() != null && !db.getToken().equals("") && !db.getToken().equals("-1")) {
             JSONObject jsonObject = new JSONObject(remoteMessage.getData());
@@ -231,7 +232,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 public Map<String, String> getHeaders() {
                     Map<String, String> headers = new HashMap<>();
                     headers.put("Authorization", "JWT " + db.getToken());
-                    headers.put("Content-Type", "application/json");
+                    headers.put("Content-Type", "application/json; charset=utf-8");
                     return headers;
                 }
             };

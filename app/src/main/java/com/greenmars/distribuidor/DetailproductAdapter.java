@@ -14,9 +14,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.greenmars.distribuidor.database.DatabaseHelper;
 import com.greenmars.distribuidor.model.ProductGas;
@@ -26,6 +30,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,10 +128,21 @@ public class DetailproductAdapter extends RecyclerView.Adapter<DetailproductAdap
                                     e.printStackTrace();
                                 }
                             }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
+                        }, error -> {
+                            Log.d(Variable.TAG, "Listar: " + error.toString());
+                            NetworkResponse response = error.networkResponse;
+                            if (response != null) {
+                                if (error instanceof ServerError) {
+                                    try {
+                                        String res = new String(response.data, HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                                        JSONObject obj = new JSONObject(res);
+                                        Log.d(Variable.TAG, "Voley post: " + obj.toString());
+                                    } catch (JSONException | UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else if (error instanceof TimeoutError) {
+                                    Toast.makeText(context, "Opss timeout, verifique su conectividad", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }) {
                             @Override
@@ -135,7 +151,7 @@ public class DetailproductAdapter extends RecyclerView.Adapter<DetailproductAdap
                                 String token = db.getToken();
                                 Log.d("Voley get", token);
                                 headers.put("Authorization", "JWT " + token);
-                                headers.put("Content-Type", "application/json");
+                                headers.put("Content-Type", "application/json; charset=utf-8");
                                 return headers;
                             }
                         };

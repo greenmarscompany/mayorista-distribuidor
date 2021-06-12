@@ -354,7 +354,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "JWT " + token);
-                headers.put("Content-Type", "application/json");
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };
@@ -426,7 +426,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                             String token1 = db.getToken();
                             Log.d("Voley get", token1);
                             headers.put("Authorization", "JWT " + token);
-                            headers.put("Content-Type", "application/json");
+                            headers.put("Content-Type", "application/json; charset=utf-8");
                             return headers;
                         }
                     };
