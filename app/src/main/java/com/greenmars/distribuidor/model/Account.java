@@ -17,6 +17,7 @@ public class Account {
     private String company_latitude;
     private String company_longitude;
     private String url_facturacion;
+    private boolean isSupplier;
     //---
     private String nombre;
     private String company_ruc;
@@ -39,6 +40,7 @@ public class Account {
         this.nombre = "";
         this.company_ruc = "";
         this.url_facturacion = "";
+        this.isSupplier = false;
     }
 
 
@@ -64,7 +66,7 @@ public class Account {
     }
 
     public Account(int ID, String dni, String email, String telefono, String direccion, String password, String token, int type, String company_id, String company_name, String company_phone,
-                   String company_address, String company_latitude, String company_longitude, String nombre, String company_ruc, String url_facturacion) {
+                   String company_address, String company_latitude, String company_longitude, String nombre, String company_ruc, String url_facturacion, boolean isSupplier) {
         this.ID = ID;
         this.dni = dni;
         this.email = email;
@@ -82,6 +84,7 @@ public class Account {
         this.nombre = nombre;
         this.company_ruc = company_ruc;
         this.url_facturacion = url_facturacion;
+        this.isSupplier = isSupplier;
     }
 
     public int getID() {
@@ -218,5 +221,13 @@ public class Account {
 
     public void setUrl_facturacion(String url_facturacion) {
         this.url_facturacion = url_facturacion;
+    }
+
+    public boolean isSupplier() {
+        return isSupplier;
+    }
+
+    public void setSupplier(boolean supplier) {
+        isSupplier = supplier;
     }
 }

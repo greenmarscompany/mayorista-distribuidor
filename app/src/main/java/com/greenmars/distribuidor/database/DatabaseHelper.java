@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_15 = "nombre";//user
     private static final String COL_16 = "company_ruc";//company
     private static final String COL_17 = "url_facturacion";
+    private static final String COL_18 = "is_supplier";
 
     //----
     public DatabaseHelper(@Nullable Context context) {
@@ -44,7 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLE_NAME + "(" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + COL_2 + " TEXT, " + COL_3 + " TEXT , " + COL_4 + " TEXT, " + COL_5 + " TEXT, " + COL_6 + " TEXT, " + COL_7 + " TEXT, " + COL_8 + " INTEGER, " + COL_9 + " TEXT, " + COL_10 + " TEXT, " + COL_11 + " TEXT, " + COL_12 +
-                " TEXT, " + COL_13 + " TEXT, " + COL_14 + " TEXT, " + COL_15 + " TEXT, " + COL_16 + " TEXT, " + COL_17 + " TEXT)");
+                " TEXT, " + COL_13 + " TEXT, " + COL_14 + " TEXT, " + COL_15 + " TEXT, " + COL_16 + " TEXT, " + COL_17 + " TEXT, " + COL_18 + " TEXT)");
     }
 
     @Override
@@ -74,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_14, cuenta.getCompany_longitude());
         contentValues.put(COL_15, cuenta.getNombre());
         contentValues.put(COL_16, cuenta.getCompany_ruc());
+        contentValues.put(COL_18, cuenta.isSupplier());
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         return result != -1;
     }
@@ -133,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cuenta = null;
         }
         if (cursor.moveToNext()) {
+            int supplier = Integer.parseInt(cursor.getString(17));
             cuenta = new Account(cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2),
@@ -149,8 +152,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     cursor.getString(13),
                     cursor.getString(14),
                     cursor.getString(15),
-                    cursor.getString(16));
+                    cursor.getString(16),
+                    supplier == 1
+            );
             cursor.close();
+
+            System.out.println("cursor: 17: " + cuenta.isSupplier());
         }
         return cuenta;
     }
@@ -196,6 +203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("db", "actualizando");
         cursor.moveToFirst();
         cursor.close();
+        db.close();
     }
 
     public boolean existsToken() {
@@ -227,24 +235,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Account cuenta = new Account();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("Select * from " + TABLE_NAME + " where token != '-1'", null);
-        if (cursor.moveToNext())
-            cuenta = new Account(cursor.getInt(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getString(5),
-                    cursor.getString(6),
-                    cursor.getInt(7),
-                    cursor.getString(8),
-                    cursor.getString(9),
-                    cursor.getString(10),
-                    cursor.getString(11),
-                    cursor.getString(12),
-                    cursor.getString(13),
-                    cursor.getString(14),
-                    cursor.getString(15),
-                    cursor.getString(16));
+        int nro = cursor.getCount();
+        if (nro > 0) {
+            if (cursor.moveToNext()) {
+                int supplier = Integer.parseInt(cursor.getString(17));
+                cuenta = new Account(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        cursor.getString(8),
+                        cursor.getString(9),
+                        cursor.getString(10),
+                        cursor.getString(11),
+                        cursor.getString(12),
+                        cursor.getString(13),
+                        cursor.getString(14),
+                        cursor.getString(15),
+                        cursor.getString(16),
+                        supplier == 1
+                );
+            }
+
+        } else {
+            cuenta = null;
+        }
+
         cursor.close();
         return cuenta;
     }

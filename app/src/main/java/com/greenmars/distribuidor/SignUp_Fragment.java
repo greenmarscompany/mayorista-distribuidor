@@ -101,7 +101,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.signup_layout, container, false);
         mResultReceiver = new AddressResultReceiver(new Handler());
-        fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        fragmentManager = requireActivity().getSupportFragmentManager();
         boolean pro = false;
         latitude = 0;
         longitude = 0;
@@ -168,7 +168,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()).getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
@@ -353,8 +353,9 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                                  final String client_id, final String phone,
                                  final String address, final String companyId, final String name) {
 
-        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         JSONObject object = new JSONObject();
+        boolean isSupplier = false;
         try {
             //input your API parameters
             object.put("username", username);
@@ -384,7 +385,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                             JSONObject companyJS = response.getJSONObject("data");
                             if (db.insertData(new Account(0, client_id, email, phone, address, password, "-1", 2, companyId, companyJS.getString("name"), companyJS.getString("phone"),
                                     companyJS.getString("address"), String.valueOf(companyJS.getDouble("latitude")),
-                                    String.valueOf(companyJS.getDouble("longitude")), name, companyJS.getString("ruc"), ""))) {
+                                    String.valueOf(companyJS.getDouble("longitude")), name, companyJS.getString("ruc"), "", isSupplier))) {
                                 // Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
                                 new CustomToast().showConfirm(getActivity(), view, msj);
                                 postDataLogin(username, password);
@@ -575,6 +576,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject object = new JSONObject();
+        boolean isSupplier = false;
         try {
             //input your API parameters
             object.put("company_name", companyName);
@@ -614,7 +616,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                             JSONObject data = response.getJSONObject("data");
                             if (db.insertData(new Account(0, client_id, email, phone, address,
                                     password, "-1", 1, data.getString("company_id"), companyName, companyPhone,
-                                    ComapnyAddress, String.valueOf(latitude), String.valueOf(longitude), name, companyRuc, ""))) {
+                                    ComapnyAddress, String.valueOf(latitude), String.valueOf(longitude), name, companyRuc, "", isSupplier))) {
                                 Toast.makeText(getContext(), msj, Toast.LENGTH_SHORT).show();
                                 // new MainActivity().replaceLoginFragment();
 

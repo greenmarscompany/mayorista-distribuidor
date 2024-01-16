@@ -41,6 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MIsPedidosFragment extends Fragment {
@@ -114,7 +115,7 @@ public class MIsPedidosFragment extends Fragment {
                         item.getProduct().setImage(Variable.HOST_BASE + item.getProduct().getImage());
                         if (item.getProduct().getCategory_id().getId() == 2)
                             item.getProduct().setDescription(item.getProduct().getMarke_id().getName() + " " + item.getProduct().getDetail_measurement_id().getName());
-                        item.getProduct().setDescription(item.getProduct().getDescription().substring(0, 1).toUpperCase() + item.getProduct().getDescription().substring(1));
+                        item.getProduct().setDescription(item.getProduct().getDescription().substring(0, 1).toUpperCase(Locale.ROOT) + item.getProduct().getDescription().substring(1));
                     }
                     Collections.sort(mispedidos_list, new SortbyProductRegister());
                     mIsPedidosAdapter = new MIsPedidosAdapter(mispedidos_list, MIsPedidosFragment.this);

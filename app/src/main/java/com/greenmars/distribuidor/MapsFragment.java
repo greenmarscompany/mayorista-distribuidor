@@ -172,7 +172,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             startActivity(intent1);
         });
         // Inflate the layout for this fragment
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(Objects.requireNonNull(getActivity()));
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.google_map);
         assert mapFragment != null;
@@ -206,7 +206,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
             }
         };
-        Objects.requireNonNull(getActivity()).registerReceiver(updateUIReciver, filter);
+        requireActivity().registerReceiver(updateUIReciver, filter);
 
         //--
 
@@ -325,7 +325,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
         try {
             if (mLocationPermissionGranted) {
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(Objects.requireNonNull(getActivity()), new OnCompleteListener<Location>() {
+                locationResult.addOnCompleteListener(requireActivity(), new OnCompleteListener<Location>() {
                     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
@@ -345,7 +345,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
                             } else {
                                 //Toast.makeText(getApplicationContext(),"GPS Desactivado!",Toast.LENGTH_SHORT).show();
-                                new GpsUtils(Objects.requireNonNull(getActivity())).turnGPSOn(new GpsUtils.onGpsListener() {
+                                new GpsUtils(requireActivity()).turnGPSOn(new GpsUtils.onGpsListener() {
                                     @Override
                                     public void gpsStatus(boolean isGPSEnable) {
                                         // turn on GPS
@@ -382,7 +382,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()).getApplicationContext(),
+        if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
@@ -506,7 +506,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     //----
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getProductCategory() {
-        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         JSONObject object = new JSONObject();
         Account cuenta = db.getAcountToken();
         try {
@@ -546,7 +546,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
                                     }
 
                                     final boolean finalEspera = espera;
-                                    Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                                    requireActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             agregarPedido(latLng, id, finalEspera);

@@ -71,8 +71,10 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("Se inicia desde este fragment");
         view = inflater.inflate(R.layout.login_layout, container, false);
         initViews();
+
         //------------- socket------------
 		/*
 		socketIO = new SocketIO();
@@ -92,7 +94,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     // Initiate Views
     private void initViews() {
 
-        fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        fragmentManager = requireActivity().getSupportFragmentManager();
         progressBar = view.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.INVISIBLE);
         emailid = view.findViewById(R.id.login_emailid);
@@ -228,7 +230,14 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                             progressBar.setVisibility(View.INVISIBLE);
                             updateToken(tok);
                             if (context != null) {
-                                Intent myIntent = new Intent(context, HomeActivity.class);
+                                Intent myIntent;
+                                System.out.println("es fabricantes: " + cuenta.isSupplier());
+                                if (cuenta.isSupplier()) {
+                                    myIntent = new Intent(context, FabricanteActivity.class);
+
+                                } else {
+                                    myIntent = new Intent(context, HomeActivity.class);
+                                }
                                 startActivity(myIntent);
                                 if (getActivity() != null)
                                     getActivity().finish();
@@ -318,14 +327,24 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                             String latitude = data.getJSONObject("company").getString("latitude");
                             String longitude = data.getJSONObject("company").getString("longitude");
 
+                            boolean isSupplier = Boolean.parseBoolean(data.getJSONObject("company").getString("is_supplier"));
+
                             if (db.insertData(new Account(0, staff_id, email, phone, address,
                                     contra, token, type_insert, company_id, companyName, companyPhone,
-                                    companyAddress, latitude, longitude, name, companyRuc, ""))) {
+                                    companyAddress, latitude, longitude, name, companyRuc, "", isSupplier))) {
                                 System.out.println("Usuario creado correctamente");
                                 updateToken(token);
                                 if (context != null) {
-                                    Intent myIntent = new Intent(context, HomeActivity.class);
+
+                                    Intent myIntent;
+                                    if (isSupplier) {
+                                        myIntent = new Intent(context, FabricanteActivity.class);
+                                    } else {
+                                        myIntent = new Intent(context, HomeActivity.class);
+                                    }
+
                                     startActivity(myIntent);
+
                                     if (getActivity() != null)
                                         getActivity().finish();
                                 }

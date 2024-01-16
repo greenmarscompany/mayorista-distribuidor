@@ -75,15 +75,14 @@ public class GasFragment extends Fragment {
 
     private void AsignarBotones() {
         detailgasAdapter.setOnClickListener(new View.OnClickListener() {
-            FragmentManager manager = getActivity().getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-
             @Override
             public void onClick(View v) {
                 String MarkeId = String.valueOf(productDetails_gases.get(recyclerView.getChildAdapterPosition(v)).getMarke_id().getId());
                 GasdetailFragment oGasdetailFragment = new GasdetailFragment();
                 oGasdetailFragment.MarcaGas = MarkeId;
                 oGasdetailFragment.TipoGas = TipoGas;
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.gas_container, oGasdetailFragment);
                 transaction.commit();
             }

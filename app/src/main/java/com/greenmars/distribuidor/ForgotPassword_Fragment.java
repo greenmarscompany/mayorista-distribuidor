@@ -70,7 +70,7 @@ public class ForgotPassword_Fragment extends Fragment implements
         emailId = view.findViewById(R.id.registered_emailid);
         submit = view.findViewById(R.id.forgot_button);
         btnCodigo = view.findViewById(R.id.btncodigo);
-        fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        fragmentManager = requireActivity().getSupportFragmentManager();
 
         progressBar = view.findViewById(R.id.pbCambiarContraseña);
         tv_espera = view.findViewById(R.id.tv_espera);
@@ -109,13 +109,13 @@ public class ForgotPassword_Fragment extends Fragment implements
         Pattern p = Pattern.compile(Variable.regEx);
         Matcher m = p.matcher(getEmailId);
         if (getEmailId.equals("") || getEmailId.length() == 0) {
-            new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view,
+            new CustomToast().Show_Toast(requireActivity(), view,
                     "Ingrese su correo.");
         } else if (!m.find()) {
-            new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view,
+            new CustomToast().Show_Toast(requireActivity(), view,
                     "Tu correo es inválido.");
         } else {
-            RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+            RequestQueue queue = Volley.newRequestQueue(requireContext());
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("email", getEmailId);

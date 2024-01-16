@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/favorite"
+        android:contentDescription="@string/agregar_producto_topbarr"
+        android:icon="@drawable/add_plus_new_icon"
+        android:title="@string/agregar_productobar"
+        app:showAsAction="ifRoom" />
+</menu>

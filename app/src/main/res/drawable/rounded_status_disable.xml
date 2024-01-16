@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Capa para el fondo con relleno y esquinas redondeadas -->
+    <item>
+        <shape>
+
+
+            <solid android:color="@color/greenStatusDisable" />
+
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp" />
+
+            <corners android:radius="5dp" />
+        </shape>
+
+    </item>
+</layer-list>

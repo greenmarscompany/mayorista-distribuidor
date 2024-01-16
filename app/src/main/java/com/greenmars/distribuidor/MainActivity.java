@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.greenmars.distribuidor.database.DatabaseHelper;
+import com.greenmars.distribuidor.model.Account;
 
 /**
  * @author Cordova, Julian
@@ -31,8 +32,14 @@ public class MainActivity extends FragmentActivity {
         getLocationPermission();
 
         DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-        if (db.existsToken()) {
-            Intent myIntent = new Intent(getBaseContext(), HomeActivity.class);
+        Account account = db.getAcountToken();
+        if (account != null) {
+            Intent myIntent;
+            if (account.isSupplier()) {
+                myIntent = new Intent(getBaseContext(), FabricanteActivity.class);
+            } else {
+                myIntent = new Intent(getBaseContext(), HomeActivity.class);
+            }
             startActivity(myIntent);
             finish();
         }

@@ -1,0 +1,22 @@
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Capa para el fondo con relleno y esquinas redondeadas -->
+    <item>
+        <shape>
+            <solid android:color="@color/greenStatus" />
+            <padding
+                android:left="5dp"
+                android:right="5dp"
+                android:bottom="5dp"
+                android:top="5dp" />
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+    <!-- Capa para preservar el relleno original -->
+    <item android:id="@android:id/background" android:left="8dp" android:right="8dp" android:top="8dp" android:bottom="8dp">
+        <shape>
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

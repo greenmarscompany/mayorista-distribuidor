@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -17,11 +18,11 @@ import java.net.URL;
 
 public class FetchURL extends AsyncTask<String, Void, String> {
     String TAG = "Gooo";
-    Context mContext;
+    private final WeakReference<Context> mContext;
     String directionMode = "driving";
 
     public FetchURL(Context mContext) {
-        this.mContext = mContext;
+        this.mContext = new WeakReference<>(mContext);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class FetchURL extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        PointsParser parserTask = new PointsParser(mContext, directionMode);
+        PointsParser parserTask = new PointsParser(mContext.get(), directionMode);
         // Invokes the thread for parsing the JSON data
         parserTask.execute(s);
     }

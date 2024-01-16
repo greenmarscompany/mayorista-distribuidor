@@ -9,11 +9,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import java.lang.ref.WeakReference;
+
 public class VolleySingleton {
-    private static VolleySingleton instance;
+    private static WeakReference<VolleySingleton> instanceRef;
     private RequestQueue requestQueue;
-    private ImageLoader imageLoader;
-    private static Context ctx;
+    private final ImageLoader imageLoader;
+    private final Context ctx;
 
     private VolleySingleton(Context context) {
         ctx = context;
@@ -35,8 +37,14 @@ public class VolleySingleton {
     }
 
     public static synchronized VolleySingleton getInstance(Context context) {
+        VolleySingleton instance = null;
+        if (instanceRef != null) {
+            instance = instanceRef.get();
+        }
+
         if (instance == null) {
             instance = new VolleySingleton(context);
+            instanceRef = new WeakReference<>(instance);
         }
 
         return instance;

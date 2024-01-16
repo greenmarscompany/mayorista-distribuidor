@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/pedidosFragment">
+
+    <fragment
+        android:id="@+id/productosFragment"
+        android:name="com.greenmars.distribuidor.ui.product.ProductosFragment"
+        android:label="Mis productos"
+        tools:layout="@layout/fragment_productos" >
+        <action
+            android:id="@+id/action_productosFragment_to_agregarProductoActivity2"
+            app:destination="@id/agregarProductoActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.greenmars.distribuidor.ui.perfil.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/pedidosFragment"
+        android:name="com.greenmars.distribuidor.PedidosFragment"
+        android:label="fragment_pedidos"
+        tools:layout="@layout/fragment_pedidos" />
+    <activity
+        android:id="@+id/agregarProductoActivity"
+        android:name="com.greenmars.distribuidor.ui.product.AgregarProductoActivity"
+        android:label="activity_agregar_producto"
+        tools:layout="@layout/activity_agregar_producto" />
+</navigation>

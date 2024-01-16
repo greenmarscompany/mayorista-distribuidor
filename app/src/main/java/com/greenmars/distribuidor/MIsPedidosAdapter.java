@@ -33,6 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MIsPedidosAdapter extends RecyclerView.Adapter<MIsPedidosAdapter.viewHolder>
@@ -259,9 +260,9 @@ public class MIsPedidosAdapter extends RecyclerView.Adapter<MIsPedidosAdapter.vi
             if (constraint.length() == 0) {
                 filterProductRegisters.addAll(Product_list);
             } else {
-                final String filterPattern = constraint.toString().toLowerCase().trim();
+                final String filterPattern = constraint.toString().toLowerCase(Locale.ROOT).trim();
                 for (final ProductRegister productRegister : Product_list) {
-                    if (productRegister.getProduct().getDescription().toLowerCase().contains(filterPattern)) {
+                    if (productRegister.getProduct().getDescription().toLowerCase(Locale.ROOT).contains(filterPattern)) {
                         filterProductRegisters.add(productRegister);
                     }
                 }

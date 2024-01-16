@@ -83,7 +83,7 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backToLoginBtn:
-                Objects.requireNonNull(getActivity()).onBackPressed();
+                requireActivity().onBackPressed();
                 //Objects.requireNonNull(getActivity()).finish();
                 break;
 
@@ -105,15 +105,15 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                 confirmPassword.equals("") || confirmPassword.length() == 0 ||
                 codigo.equals("") || codigo.length() == 0)
 
-            new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view,
+            new CustomToast().Show_Toast(requireActivity(), view,
                     "(*) Los campos de código y contraseña son requeridos");
         else if (!password.equals(confirmPassword)) {
-            new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view,
+            new CustomToast().Show_Toast(requireActivity(), view,
                     "(*) Los campos de contraseña no coinciden");
         } else {
 
 
-            RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+            RequestQueue queue = Volley.newRequestQueue(requireContext());
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("password", password);
@@ -133,7 +133,7 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                                 startActivity(intent);
                                 Toast.makeText(getContext(), "Contraseña cambiada correctamente :)", Toast.LENGTH_LONG)
                                         .show();
-                                Objects.requireNonNull(getActivity()).finish();
+                                requireActivity().finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -156,12 +156,12 @@ public class ResetPasswordFragment extends Fragment implements View.OnClickListe
                                 }
 
                                 if (!obj.isNull("status")) {
-                                    new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view,
+                                    new CustomToast().Show_Toast(requireActivity(), view,
                                             "El código ingresado es incorrecto :(");
                                 }
 
                                 if (mensajes.length() > 0) {
-                                    new CustomToast().Show_Toast(Objects.requireNonNull(getActivity()), view, mensajes.toString());
+                                    new CustomToast().Show_Toast(requireActivity(), view, mensajes.toString());
                                 }
 
                                 ocultarProgress();
