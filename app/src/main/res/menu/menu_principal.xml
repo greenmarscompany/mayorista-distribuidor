@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_facturacion"
-        android:icon="@drawable/ic_round_assignment_24"
+        android:icon="@drawable/icon_store"
+        android:iconTint="@color/white"
         android:title="Facturacion"
         app:showAsAction="ifRoom" />
 

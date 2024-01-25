@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_perfil" />
     <fragment
         android:id="@+id/pedidosFragment"
-        android:name="com.greenmars.distribuidor.PedidosFragment"
+        android:name="com.greenmars.distribuidor.ui.order.PedidosFragment"
         android:label="fragment_pedidos"
         tools:layout="@layout/fragment_pedidos" />
     <activity

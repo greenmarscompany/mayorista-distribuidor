@@ -2,10 +2,14 @@ package com.greenmars.distribuidor.data.network
 
 import android.content.Context
 import android.util.Log
+import com.greenmars.distribuidor.data.RepositoryStoreImpl
 import com.greenmars.distribuidor.Variable
 import com.greenmars.distribuidor.data.RepositoryImpl
+import com.greenmars.distribuidor.data.database.dao.CartDao
+import com.greenmars.distribuidor.data.database.dao.CartItemDao
 import com.greenmars.distribuidor.database.DatabaseHelper
 import com.greenmars.distribuidor.domain.Repository
+import com.greenmars.distribuidor.domain.RepositoryStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,21 +40,21 @@ object NetworkModule {
 
         Log.i("token retrofit: ", token)
         val client = OkHttpClient.Builder()
-                .addInterceptor(Interceptor { chain ->
-                    val newRequest = chain.request().newBuilder()
-                            .addHeader("Authorization", "jwt $token")
-                            .build()
-                    chain.proceed(newRequest)
-                })
-                // .addInterceptor(interceptorL)
-                .build()
+            .addInterceptor(Interceptor { chain ->
+                val newRequest = chain.request().newBuilder()
+                    .addHeader("Authorization", "jwt $token")
+                    .build()
+                chain.proceed(newRequest)
+            })
+            .addInterceptor(interceptorL)
+            .build()
 
         return Retrofit
-                .Builder()
-                .client(client)
-                .baseUrl(Variable.HOST_RETROFIT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .Builder()
+            .client(client)
+            .baseUrl(Variable.HOST_RETROFIT)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
     @Provides
@@ -61,6 +65,20 @@ object NetworkModule {
     @Provides
     fun provideRepository(apiService: FabricanteApi): Repository {
         return RepositoryImpl(apiService)
+    }
+
+    @Provides
+    fun provideStoreApi(retrofit: Retrofit): StoreApi {
+        return retrofit.create(StoreApi::class.java)
+    }
+
+    @Provides
+    fun provideRepositoryStore(
+        apiService: StoreApi,
+        cartDao: CartDao,
+        cartItemDao: CartItemDao
+    ): RepositoryStore {
+        return RepositoryStoreImpl(apiService, cartDao, cartItemDao)
     }
 
 }

@@ -206,7 +206,11 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
 
             }
         };
-        requireActivity().registerReceiver(updateUIReciver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requireActivity().registerReceiver(updateUIReciver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            requireActivity().registerReceiver(updateUIReciver, filter);
+        }
 
         //--
 

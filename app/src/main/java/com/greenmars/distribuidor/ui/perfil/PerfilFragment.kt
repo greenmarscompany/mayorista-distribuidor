@@ -26,12 +26,16 @@ class PerfilFragment : Fragment() {
     private val perfilViewModel: PerfilViewModel by viewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentPerfilBinding.inflate(layoutInflater, container, false)
         initUI()
+
+        val db = DatabaseHelper(context)
+        val account: Account = db.acountToken
+        llenarDatos(account)
 
         return binding.root
     }
@@ -49,5 +53,15 @@ class PerfilFragment : Fragment() {
             activity?.finish()
         }
 
+    }
+
+    private fun llenarDatos(account: Account) {
+        binding.apply {
+            tvName.text = account.nombre
+            tvEmail.text = account.email
+            tvPhone.text = account.telefono
+            tvRuc.text = account.company_ruc
+            tvAddress.text = account.direccion
+        }
     }
 }

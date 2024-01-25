@@ -26,8 +26,8 @@ class RepositoryImpl @Inject constructor(private val apiService: FabricanteApi) 
             if (response != null) {
 
                 productStaffList.addAll(
-                        response
-                                .map { it.toDomain() }
+                    response
+                        .map { it.toDomain() }
                 )
             }
 
@@ -130,7 +130,8 @@ class RepositoryImpl @Inject constructor(private val apiService: FabricanteApi) 
     }
 
     override suspend fun saveImage(file: File, idproduct: String): ApiImageResponse? {
-        val requestFile = okhttp3.RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+        val requestFile =
+            okhttp3.RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
         val filePart = okhttp3.MultipartBody.Part.createFormData("file", file.name, requestFile)
         val idProductPart = okhttp3.RequestBody.create("text/plain".toMediaTypeOrNull(), idproduct)
 
@@ -138,6 +139,32 @@ class RepositoryImpl @Inject constructor(private val apiService: FabricanteApi) 
             apiService.saveImage(filePart, idProductPart)
         }.onSuccess {
             return it
+        }.onFailure {
+            Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
+        }
+
+        return null
+    }
+
+    override suspend fun getOrders(): List<Order>? {
+        runCatching {
+            apiService.getOrders()
+        }.onSuccess { it ->
+            return it.data.map {
+                it.toDomain()
+            }
+        }.onFailure {
+            Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
+        }
+
+        return null
+    }
+
+    override suspend fun saveOrder(order: OrderStore): ResponseMessage? {
+        runCatching {
+            apiService.saveOrderStaff(order.toEntity())
+        }.onSuccess {
+            return it.toDomain()
         }.onFailure {
             Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
         }

@@ -27,9 +27,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".ui.store.StoreActivity"
+            android:exported="false"
+            android:theme="@style/MiTemaAppBar" />
+        <activity
             android:name=".ui.product.AgregarProductoActivity"
-            android:theme="@style/AppThemeFabricante"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppThemeFabricante" />
         <activity
             android:name=".FabricanteActivity"
             android:exported="false"
@@ -99,8 +103,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".NotificationReceiver" />
-        <!-- Trigger Google Play services to install the backported photo picker module. -->
+        <receiver android:name=".NotificationReceiver" /> <!-- Trigger Google Play services to install the backported photo picker module. -->
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"
             android:enabled="false"
@@ -109,6 +112,7 @@
             <intent-filter>
                 <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
             </intent-filter>
+
             <meta-data
                 android:name="photopicker_activity:0:required"
                 android:value="" />

@@ -103,4 +103,18 @@
     <color name="md_theme_dark_surfaceTint">#ABC7FF</color>
     <color name="md_theme_dark_outlineVariant">#44474E</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="line_separator_color">#A3A3A3</color>
+
+    <color name="title_waiting">#E6AD02</color>
+    <color name="title_refuse">#A3A3A3</color>
+    <color name="title_confirm">#A3A3A3</color>
+    <color name="title_delivered">#A3A3A3</color>
+    <color name="title_cancel">#A3A3A3</color>'
+
+    <!--    Colores secundarios mayorista-->
+    <color name="bar_primary">#EBEFF5</color>
+    <color name="bar_secondary">#1469D9</color>
+    <color name="bar_text_principal">#131313</color>
+    <color name="text_categoria">#424242</color>
+    <color name="price_color">#009688</color>
 </resources>

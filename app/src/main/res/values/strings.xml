@@ -134,5 +134,7 @@ Todas las notificaciones que deba enviarse conforme a estos Términos y Condicio
     <string name="btn_guardar_prod">Guardar</string>
     <string name="btn_limpiar_prod">Limpiar</string>
     <string name="subir_foto">Subir foto</string>
+    <string name="mis_pedidos">Mis pedidos</string>
+    <string name="mi_carrito">Mi carrito</string>
 
 </resources>

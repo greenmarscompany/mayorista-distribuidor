@@ -4,6 +4,7 @@ public final class Variable {
 
     public static final String TAG = "MayoristaDistribuidor";
     public static final String HOST_BASE = "http://143.198.54.16";
+    public static final String HOST_BASE_MEDIA = "http://143.198.54.16/media/";
     //public static final String HOST_BASE = "http://10.0.2.2:8000";
     public static final String HOST = "http://143.198.54.16/api";
     // public static final String HOST = "http://10.0.2.2:8000/api";

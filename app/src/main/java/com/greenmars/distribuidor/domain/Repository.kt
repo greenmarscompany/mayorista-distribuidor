@@ -3,7 +3,9 @@ package com.greenmars.distribuidor.domain
 import com.greenmars.distribuidor.data.model.ProductRegisterStaff
 import com.greenmars.distribuidor.data.response.ApiImageResponse
 import com.greenmars.distribuidor.data.response.ApiProductResponse
+import com.greenmars.distribuidor.data.response.ApiResponseCore
 import com.greenmars.distribuidor.data.response.CategoryResponse
+import com.greenmars.distribuidor.data.response.OrderResponse
 import com.greenmars.distribuidor.data.response.ResponseLogout
 import java.io.File
 
@@ -17,4 +19,7 @@ interface Repository {
     suspend fun getUnitMeasurements(): List<UnitMeasurement>?
     suspend fun saveProduct(product: ProductRegisterStaff): ApiProductResponse?
     suspend fun saveImage(file: File, idproduct: String): ApiImageResponse?
+    suspend fun getOrders(): List<Order>?
+
+    suspend fun saveOrder(order: OrderStore): ResponseMessage?
 }

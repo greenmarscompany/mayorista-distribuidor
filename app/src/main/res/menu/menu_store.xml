@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/imMisPedidos"
+        android:icon="@drawable/icon_pedidos_24"
+        android:title="Mis pedidos"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/imCart"
+        android:icon="@drawable/icon_cart_24"
+        android:title="Mis carrito"
+        app:showAsAction="ifRoom" />
+
+</menu>

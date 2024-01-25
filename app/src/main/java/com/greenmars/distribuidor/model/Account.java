@@ -1,5 +1,7 @@
 package com.greenmars.distribuidor.model;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Account {
     private int ID;
     private String dni;
@@ -229,5 +231,30 @@ public class Account {
 
     public void setSupplier(boolean supplier) {
         isSupplier = supplier;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "Account{" +
+                "ID=" + ID +
+                ", dni='" + dni + '\'' +
+                ", email='" + email + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", type=" + type +
+                ", company_id='" + company_id + '\'' +
+                ", company_name='" + company_name + '\'' +
+                ", company_phone='" + company_phone + '\'' +
+                ", company_address='" + company_address + '\'' +
+                ", company_latitude='" + company_latitude + '\'' +
+                ", company_longitude='" + company_longitude + '\'' +
+                ", url_facturacion='" + url_facturacion + '\'' +
+                ", isSupplier=" + isSupplier +
+                ", nombre='" + nombre + '\'' +
+                ", company_ruc='" + company_ruc + '\'' +
+                '}';
     }
 }

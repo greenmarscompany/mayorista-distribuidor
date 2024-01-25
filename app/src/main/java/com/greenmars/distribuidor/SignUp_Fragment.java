@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +92,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
     private int nroCheckGps;
 
     private FragmentManager fragmentManager;
+    private boolean isGpsLocated = false;
+    private boolean isSupplier = false;
 
     //--
     public SignUp_Fragment(String type_proveedor) {
@@ -177,7 +181,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
-        //getDeviceLocation();
     }
 
     private void getDeviceLocation() {
@@ -199,11 +202,11 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                             latitude = mLastKnownLocation.getLatitude();
                             longitude = mLastKnownLocation.getLongitude();
                             startIntentService(mLastKnownLocation);
+                            isGpsLocated = true;
                         } else {
-                            //Toast.makeText(getContext(),"Activando GPS!",Toast.LENGTH_SHORT).show();
                             toastGps.show();
                             nroCheckGps++;
-                            if (nroCheckGps == 3) {
+                            if (nroCheckGps == 2) {
                                 toastGps.cancel();
                                 showDialogCloseApp();
                             } else {
@@ -225,8 +228,10 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
     //------
     private void displayAddressOutput() {
-        location.setText(mAddressOutput);
-        company_address.setText(mAddressOutput);
+        if (isGpsLocated) {
+            location.setText(mAddressOutput);
+            company_address.setText(mAddressOutput);
+        }
     }
 
     // Initialize all views
@@ -250,6 +255,10 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         TextView singup_title = view.findViewById(R.id.tv_signup);
         TextInputLayout tLayoutCompanyID = view.findViewById(R.id.tLayoutCompanyID);
 
+        RadioGroup radioGroup = view.findViewById(R.id.rgTipo);
+        RadioButton fabricanteR = view.findViewById(R.id.rbFabricante);
+        RadioButton proveedorR = view.findViewById(R.id.rbProveedor);
+
         singup_title.setText("Datos de Repartidor");
 
         if (propietario) {
@@ -259,6 +268,18 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         }
 
         terms_conditions = (CheckBox) view.findViewById(R.id.terms_conditions);
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbFabricante:
+                    isSupplier = true;
+                    break;
+
+                case R.id.rbProveedor:
+                    isSupplier = false;
+                    break;
+            }
+        });
     }
 
     // Set Listeners
@@ -336,10 +357,9 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Por favor, acepte los terminos y condiciones.");
 
-        else if (latitude == 0 || longitude == 0)
+        /*else if (latitude == 0 || longitude == 0)
             new CustomToast().Show_Toast(getActivity(), view,
-                    "La ubicacion del dispositivo no es correcto");
-            // Else do signup or do your stuff
+                    "La ubicacion del dispositivo no es correcto");*/
         else {
             Toast.makeText(getActivity(), "Registrando distribuidor.", Toast.LENGTH_SHORT)
                     .show();
@@ -519,6 +539,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         String getCompanyAddrees = company_address.getText().toString();
         String getCompanyRuc = company_ruc.getText().toString();
 
+        boolean supplier = isSupplier;
+
         //String getType = spinner_type.getSelectedItem().toString();
         // Pattern match for email id
         Pattern p = Pattern.compile(Variable.regEx);
@@ -549,22 +571,22 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             // Check if both password should be equal
         else if (!getConfirmPassword.equals(getPassword))
             new CustomToast().Show_Toast(getActivity(), view,
-                    "Los password no coinsiden.");
+                    "Los password no coinciden.");
 
             // Make sure user should check Terms and Conditions checkbox
         else if (!terms_conditions.isChecked())
             new CustomToast().Show_Toast(getActivity(), view,
                     "Por favor, acepte los terminos y condiciones.");
 
-        else if (latitude == 0 || longitude == 0)
+        /*else if (latitude == 0 || longitude == 0)
             new CustomToast().Show_Toast(getActivity(), view,
-                    "La ubicacion del dispositivo no es correcto");
+                    "La ubicacion del dispositivo no es correcto");*/
 
             // Else do signup or do your stuff
         else {
             Toast.makeText(getActivity(), "Registrando propietario", Toast.LENGTH_SHORT)
                     .show();
-            postDataRegistro_propietario(getCompanyName, getCompanyPhone, getCompanyAddrees, getEmailId, getPassword, getEmailId, getFullName, getMobileNumber, getLocation, getNombre, getCompanyRuc);
+            postDataRegistro_propietario(getCompanyName, getCompanyPhone, getCompanyAddrees, getEmailId, getPassword, getEmailId, getFullName, getMobileNumber, getLocation, getNombre, getCompanyRuc, supplier);
         }
 
 
@@ -572,7 +594,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
     public void postDataRegistro_propietario(final String companyName, final String companyPhone, final String ComapnyAddress,
                                              final String username, final String password, final String email, final String client_id, final String phone, final String address,
-                                             final String name, final String companyRuc) {
+                                             final String name, final String companyRuc, final boolean supplier) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JSONObject object = new JSONObject();
@@ -585,6 +607,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             object.put("company_latitude", latitude);
             object.put("company_longitude", longitude);
             object.put("company_ruc", companyRuc);
+            object.put("supplier", supplier);
             //-------
             object.put("username", username);
             object.put("password", password);
@@ -719,18 +742,17 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
     }
 
     private void showDialogCloseApp() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Lo sentimos");
         builder.setMessage("Tenemos inconvenientes con el GPS del dispositivo. Asegurese de contar con internet y tener habilitado el GPS!");
         builder.setPositiveButton("Aceptar", (dialogInterface, i) -> {
-            //
-            if (getActivity() != null)
-                getActivity().finish();
+            isGpsLocated = false;
         });
 
-        builder.setCancelable(false);
+        builder.setCancelable(true);
         builder.show();
-
+        habilitarTouch();
+        progressBar_gps.setVisibility(View.GONE);
     }
 
     //---

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
@@ -8,13 +8,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MiTemaAppBar" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Colores de la barra de aplicaciones -->
+        <item name="colorPrimary">@color/bar_secondary</item>
+        <item name="colorPrimaryVariant">@color/bar_secondary</item>
+        <item name="colorSurface">@color/bar_primary</item>
+
+        <!-- Color de fondo de la ventana -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <!-- Color de la barra de estado -->
+        <item name="android:statusBarColor">@color/bar_secondary</item>
+
+        <!-- Texto claro en la barra de navegación -->
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Color de la barra de navegación -->
+        <item name="android:navigationBarColor">@color/bar_secondary</item>
+    </style>
+
+    <style name="MiTemaAppBarStyleText">
+        <item name="android:textSize">20sp</item>
+        <!-- Otros atributos de estilo de texto que desees agregar -->
+    </style>
+
     <style name="AppThemeFabricante" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/white</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-
     </style>
 
     <style name="CantidadTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

@@ -17,8 +17,8 @@ android {
         applicationId = "com.greenmars.distribuidor"
         minSdk = 16
         targetSdk = 34
-        versionCode = 7
-        versionName = "v1.7"
+        versionCode = 8
+        versionName = "v1.8"
         multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,8 +56,12 @@ android {
 
 
 dependencies {
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     val navVersion = "2.7.6"
     val activity_version = "1.6.1"
+    val room_version = "2.5.0"
+
     implementation("com.google.maps.android:android-maps-utils:0.6.2")
 
     // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -105,4 +109,11 @@ dependencies {
 
 
     implementation("androidx.activity:activity-ktx:$activity_version")
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+
+
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.room:room-ktx:2.6.1")
 }

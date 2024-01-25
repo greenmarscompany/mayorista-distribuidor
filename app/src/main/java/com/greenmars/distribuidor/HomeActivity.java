@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.greenmars.distribuidor.database.DatabaseHelper;
 import com.greenmars.distribuidor.location.TaskLoadedCallback;
 import com.greenmars.distribuidor.model.Account;
+import com.greenmars.distribuidor.ui.store.StoreActivity;
 import com.greenmars.distribuidor.util.ViewPageAdapter;
 
 import org.json.JSONException;
@@ -157,7 +158,7 @@ public class HomeActivity extends AppCompatActivity implements TaskLoadedCallbac
                 return true;
 
             case R.id.action_facturacion:
-                Intent intent1 = new Intent(getBaseContext(), WebActivity.class);
+                Intent intent1 = new Intent(getBaseContext(), StoreActivity.class);
                 startActivity(intent1);
                 return true;
         }

@@ -1,5 +1,6 @@
 package com.greenmars.distribuidor.data.network
 
+import com.greenmars.distribuidor.data.model.OrderRegister
 import com.greenmars.distribuidor.data.response.*
 import com.greenmars.distribuidor.data.model.ProductRegisterStaff
 import okhttp3.MultipartBody
@@ -37,5 +38,14 @@ interface FabricanteApi {
 
     @Multipart
     @PUT("product/register-manufacturer/image/")
-    suspend fun saveImage(@Part file: MultipartBody.Part, @Part("id_product") idproduct: RequestBody): ApiImageResponse
+    suspend fun saveImage(
+        @Part file: MultipartBody.Part,
+        @Part("id_product") idproduct: RequestBody
+    ): ApiImageResponse
+
+    @GET("order-supplier")
+    suspend fun getOrders(): ApiResponseCore<OrderResponse>
+
+    @POST("order-supplier/")
+    suspend fun saveOrderStaff(@Body orderData: OrderRegister): ApiResponseMessage
 }
