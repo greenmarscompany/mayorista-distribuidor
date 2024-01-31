@@ -31,7 +31,6 @@ class StoreActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStoreBinding
     private lateinit var db: DatabaseHelper
-    private lateinit var badge: BadgeDrawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +43,9 @@ class StoreActivity : AppCompatActivity() {
             .commit()
 
         db = DatabaseHelper(applicationContext)
-        badge = BadgeDrawable.create(this)
-        menuBadge()
         initUI()
 
-        val callback = object : OnBackPressedCallback(true) {
+        /*val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val fragmentInits = StoreCompanyFragment()
                 supportFragmentManager.beginTransaction()
@@ -58,12 +55,14 @@ class StoreActivity : AppCompatActivity() {
             }
         }
 
-        onBackPressedDispatcher.addCallback(this, callback)
+        onBackPressedDispatcher.addCallback(this, callback)*/
     }
 
     private fun initUI() {
         val account: Account = db.acountToken
-        val store = CartStore(
+
+        // Todo refactorizar a carritos independientes
+        /*val store = CartStore(
             id = 0,
             clientId = account.company_id
         )
@@ -72,7 +71,7 @@ class StoreActivity : AppCompatActivity() {
 
         storeActivityViewModel.getCart()
         storeActivityViewModel.saveCart(store)
-        storeActivityViewModel.getCountItem()
+        storeActivityViewModel.getCountItem()*/
 
         initState()
         menusListeners()
@@ -86,13 +85,6 @@ class StoreActivity : AppCompatActivity() {
 
 
         lifecycleScope.launch {
-
-            storeActivityViewModel.counter.collect {
-                Log.i("counter", "Cantidad Activity: ${it.toString()}")
-                badge.number = it
-                badge.isVisible = it > 0
-                Log.i("counter", "isVisible: ${badge.isVisible}")
-            }
 
             /*Log.i("activity", "Antes de repeatOnLifecycle")
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -113,7 +105,7 @@ class StoreActivity : AppCompatActivity() {
     private fun menusListeners() {
         binding.topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.imCart -> {
+                /*R.id.imCart -> {
                     val fragmentInit = CartFragment()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.containerFragments, fragmentInit)
@@ -121,14 +113,10 @@ class StoreActivity : AppCompatActivity() {
 
                     true
                 }
-
+*/
                 else -> false
             }
         }
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
-    private fun menuBadge() {
-        BadgeUtils.attachBadgeDrawable(badge, binding.topAppBar, R.id.imCart)
-    }
 }

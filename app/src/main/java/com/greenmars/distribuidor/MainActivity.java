@@ -29,7 +29,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getLocationPermission();
+        // getLocationPermission();
 
         DatabaseHelper db = new DatabaseHelper(getApplicationContext());
         Account account = db.getAcountToken();

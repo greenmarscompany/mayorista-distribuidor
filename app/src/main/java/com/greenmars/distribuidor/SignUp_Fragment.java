@@ -1,8 +1,10 @@
 package com.greenmars.distribuidor;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -21,6 +23,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
@@ -100,6 +104,20 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         this.type_proveedor = type_proveedor;
     }
 
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    if (Boolean.TRUE.equals(result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false))
+                            && Boolean.TRUE.equals(result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false))) {
+                        mLocationPermissionGranted = true;
+                        getDeviceLocation();
+                    } else {
+                        mLocationPermissionGranted = false;
+                    }
+                }
+            }
+    );
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,7 +147,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         else
             cardView.setVisibility(View.GONE);
         //----
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
+        /*if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
@@ -137,12 +155,18 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
+        }*/
 
         //---
+        getPermissions();
         if (getActivity() != null)
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        getDeviceLocation();
+
+        Log.i("fragment", "Permison de ubicacion: " + mLocationPermissionGranted);
+        if (mLocationPermissionGranted) {
+            Log.i("fragsing", "Hay permisos de ubicacion");
+            getDeviceLocation();
+        }
 
 
         TextView terminos_condiciones = view.findViewById(R.id.terminos_condiciones);
@@ -155,31 +179,12 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         return view;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        mLocationPermissionGranted = false;
-        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionGranted = true;
-            }
-        }
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+    public void getPermissions() {
         if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
         } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            requestPermissionLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
         }
     }
 
@@ -191,7 +196,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                 locationResult.addOnCompleteListener(getActivity(), task -> {
                     if (task.isSuccessful()) {
                         if (getActivity() == null) return;
-                        // Set the map's camera position to the current location of the device.
                         mLastKnownLocation = task.getResult();
                         if (mLastKnownLocation != null) {
                             habilitarTouch();
@@ -222,7 +226,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                 });
             }
         } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
+            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
         }
     }
 

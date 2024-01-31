@@ -32,7 +32,7 @@ class StoreActivityViewModel @Inject constructor(
     private var _totalPrices = MutableStateFlow<Double>(0.0)
     val totalPrices: StateFlow<Double> = _totalPrices
 
-    fun saveCart(cartStore: CartStore) {
+    /*fun saveCart(cartStore: CartStore) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val resultGetCart = repository.getCart()
@@ -45,11 +45,11 @@ class StoreActivityViewModel @Inject constructor(
         }
     }
 
-    fun getCart() {
+    fun getCart(companyId: String) {
         viewModelScope.launch {
             Log.i("vmstore", "Se llamo a getCart()")
             val result = withContext(Dispatchers.IO) {
-                repository.getCart()
+                repository.getCart(companyId)
             }
 
             if (result != null) {
@@ -59,9 +59,9 @@ class StoreActivityViewModel @Inject constructor(
         }
     }
 
-    fun getCountItem() {
+    fun getCountItem(companyId: String) {
         viewModelScope.launch {
-            val cart = repository.getCart()
+            val cart = repository.getCart(companyId)
             val result = withContext(Dispatchers.IO) {
                 repository.getItemCount(cart?.id ?: 0L)
             }
@@ -70,11 +70,12 @@ class StoreActivityViewModel @Inject constructor(
                 _counter.value = result
             }
         }
-    }
+    }*/
 
-    fun saveCartItem(cartStoreItem: CartStoreItem) {
+    fun saveCartItem(companyId: String, cartStoreItem: CartStoreItem) {
         viewModelScope.launch {
-            val cart = repository.getCart()
+            val cart = repository.getCart(companyId)
+            Log.i("vmstore", "Antes de guardar items: " + cart.toString())
             val itemsCart = repository.getCartItems(cart?.id ?: 0L)
             var isExists = false
             if (itemsCart != null) {
@@ -99,9 +100,9 @@ class StoreActivityViewModel @Inject constructor(
         }
     }
 
-    fun getItemsCart() {
+    fun getItemsCart(companyId: String) {
         viewModelScope.launch {
-            val cart = repository.getCart()
+            val cart = repository.getCart(companyId)
             val result = withContext(Dispatchers.IO) {
                 repository.getCartItems(cart?.id ?: 0L)
             }

@@ -11,4 +11,8 @@
     <dimen name="height_header">2dp</dimen>
     <dimen name="width_content">200dp</dimen>
     <dimen name="width_image">100dp</dimen>
+
+    <dimen name="badge_horizontal_offset">8dp</dimen>
+    <dimen name="badge_vertical_offset">-8dp</dimen>
+    <dimen name="badge_corner_radius">4dp</dimen>
 </resources>

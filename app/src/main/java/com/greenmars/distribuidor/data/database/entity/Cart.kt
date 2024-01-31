@@ -10,9 +10,10 @@ data class Cart(
 
     @PrimaryKey(autoGenerate = true) val cartId: Long = 0,
     @ColumnInfo("client_id") val clientId: String,
+    @ColumnInfo("company_id") val companyId: String,
 ) {
     fun toDomain(): CartStore {
-        return CartStore(id = cartId, clientId = clientId)
+        return CartStore(id = cartId, clientId = clientId, companyId = companyId)
     }
 }
 

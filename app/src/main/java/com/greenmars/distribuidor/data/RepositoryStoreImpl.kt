@@ -56,9 +56,9 @@ class RepositoryStoreImpl @Inject constructor(
         return null
     }
 
-    override suspend fun getCart(): CartStore? {
+    override suspend fun getCart(companyId: String): CartStore? {
         runCatching {
-            cartDao.getCart()
+            cartDao.getCart(companyId)
         }.onSuccess {
             if (it != null) {
 
@@ -89,7 +89,8 @@ class RepositoryStoreImpl @Inject constructor(
     override suspend fun saveCart(cart: CartStore) {
 
         val cartEntity = Cart(
-            clientId = cart.clientId
+            clientId = cart.clientId,
+            companyId = cart.companyId
         )
 
         runCatching {

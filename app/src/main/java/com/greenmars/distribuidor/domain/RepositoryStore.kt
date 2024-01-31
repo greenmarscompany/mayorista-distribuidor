@@ -8,7 +8,7 @@ interface RepositoryStore {
     suspend fun getCompanies(idcategoria: Int): List<Company>?
     suspend fun getProductsCompany(idcompany: String): List<ProductStore>?
 
-    suspend fun getCart(): CartStore?
+    suspend fun getCart(companyId: String): CartStore?
     suspend fun getCartItems(cartsId: Long): List<CartStoreItem>?
 
     suspend fun saveCart(cart: CartStore)

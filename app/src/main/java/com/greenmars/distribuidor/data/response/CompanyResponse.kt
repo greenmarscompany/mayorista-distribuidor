@@ -13,13 +13,15 @@ data class CompanyResponse(
     @SerializedName("longitude") val longitude: Double,
     @SerializedName("url_facturacion") val urlFacturacion: String?,
     @SerializedName("image") val image: String?,
-    @SerializedName("is_supplier") val isSupplier: Boolean
+    @SerializedName("is_supplier") val isSupplier: Boolean,
+    @SerializedName("staff_id") val staffId: String,
 ) {
     fun toDomain(): Company {
         return Company(
             id = companyId,
             name = name,
-            image = image ?: ""
+            image = image ?: "",
+            staffId = staffId
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.greenmars.distribuidor;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -106,6 +109,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     private final ArrayList<Marker> pedidos = new ArrayList<>();
     //--
     private static final String TAG = "Friibusiness";
+    private static final int REQUEST_LOCATION_PERMISSION = 123;
     private Marker marcador;
     private GoogleMap mMap;
     private Polyline mPolyline;
@@ -143,6 +147,21 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
     public MapsFragment() {
         // Required empty public constructor
     }
+
+    private final ActivityResultLauncher<String[]> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    if (Boolean.TRUE.equals(result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false))
+                            && Boolean.TRUE.equals(result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false))) {
+                        mLocationPermissionGranted = true;
+                        updateLocationUI();
+                    } else {
+                        mLocationPermissionGranted = false;
+                    }
+                }
+            }
+    );
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
@@ -326,51 +345,39 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
          */
+
+
         try {
             if (mLocationPermissionGranted) {
                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(requireActivity(), new OnCompleteListener<Location>() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                if (marcador != null) marcador.remove();
+                locationResult.addOnCompleteListener(requireActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        mLastKnownLocation = task.getResult();
+                        if (mLastKnownLocation != null) {
+                            if (marcador != null) marcador.remove();
 
-                                LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                                //marcador=mMap.addMarker(new MarkerOptions().position(latLng).title("Estas aqui").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-                                //marcador.setTag(1);
-                                //setMarkerBounce(marcador);
-                                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
-                                getProductCategory();
+                            LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
+                            getProductCategory();
 
-                            } else {
-                                //Toast.makeText(getApplicationContext(),"GPS Desactivado!",Toast.LENGTH_SHORT).show();
-                                new GpsUtils(requireActivity()).turnGPSOn(new GpsUtils.onGpsListener() {
-                                    @Override
-                                    public void gpsStatus(boolean isGPSEnable) {
-                                        // turn on GPS
-                                        if (isGPSEnable) {
-                                            //---------------------------------
-                                            updateLocationUI();
-                                            getDeviceLocation();
-                                            //LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
-                                            //mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                                            //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,DEFAULT_ZOOM));
-                                        }
-                                    }
-                                });
-                            }
                         } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            mMap.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
-                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                            new GpsUtils(requireActivity()).turnGPSOn(isGPSEnable -> {
+                                if (isGPSEnable) {
+                                    //---------------------------------
+                                    updateLocationUI();
+                                    getDeviceLocation();
+                                    //LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                                    //mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                                    //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,DEFAULT_ZOOM));
+                                }
+                            });
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        mMap.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                        mMap.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -386,18 +393,25 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
+        /*if (ContextCompat.checkSelfPermission(requireActivity().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
         } else {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }*/
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            requestPermissionLauncher.launch(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION});
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    // Deprecated
+    /* @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
@@ -410,7 +424,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Google
             }
         }
         updateLocationUI();
-    }
+    }*/
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void updateLocationUI() {

@@ -6,11 +6,4 @@
         android:icon="@drawable/icon_pedidos_24"
         android:title="Mis pedidos"
         app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/imCart"
-        android:icon="@drawable/icon_cart_24"
-        android:title="Mis carrito"
-        app:showAsAction="ifRoom" />
-
 </menu>

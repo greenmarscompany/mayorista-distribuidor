@@ -136,5 +136,9 @@ Todas las notificaciones que deba enviarse conforme a estos Términos y Condicio
     <string name="subir_foto">Subir foto</string>
     <string name="mis_pedidos">Mis pedidos</string>
     <string name="mi_carrito">Mi carrito</string>
+    <string name="olvide_mi_contra">¿Olvidaste tu contraseña?</string>
+    <string name="no_hay_items">No hay productos, agregue para ordenar</string>
+    <string name="productos_disponibles">Productos disponibles</string>
+    <string name="carrito">Carrito</string>
 
 </resources>

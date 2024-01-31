@@ -17,6 +17,7 @@ class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun render(item: CartStoreItem, onItemEventListener: OnItemEventListener) {
         Log.i("vhcart", "Inicio el view holder")
+
         binding.apply {
             tvName.text = StringUtils.truncarTexto(item.nameProduct, 15)
             Glide.with(ivImage.context).load(Variable.HOST_BASE_MEDIA + item.image).fitCenter()
@@ -29,7 +30,7 @@ class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         binding.btnDisminuir.isEnabled = item.quantity > 1
 
 
-
+        // Eventos
         binding.tvEliminarItem.setOnClickListener {
             onItemEventListener.onDeleteItem(item)
         }

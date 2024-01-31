@@ -11,8 +11,8 @@ interface CartDao {
     @Insert
     suspend fun insertCart(cart: Cart): Long
 
-    @Query("SELECT * FROM table_cart LIMIT 1")
-    suspend fun getCart(): Cart?
+    @Query("SELECT * FROM table_cart WHERE company_id = :companyId LIMIT 1")
+    suspend fun getCart(companyId: String): Cart?
 
     @Query("SELECT * FROM table_cart WHERE cartId = :cartId")
     suspend fun getCartById(cartId: Long): Cart?

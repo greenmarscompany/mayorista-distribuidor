@@ -8,12 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.greenmars.distribuidor.R
 import com.greenmars.distribuidor.databinding.FragmentCartBinding
 import com.greenmars.distribuidor.domain.CartStoreItem
 import com.greenmars.distribuidor.domain.OrderItemStore
@@ -21,6 +24,8 @@ import com.greenmars.distribuidor.domain.OrderStore
 import com.greenmars.distribuidor.ui.store.StoreActivityViewModel
 import com.greenmars.distribuidor.ui.store.cart.adapter.CartAdapter
 import com.greenmars.distribuidor.ui.store.cart.adapter.OnItemEventListener
+import com.greenmars.distribuidor.ui.store.company.StoreCompanyFragment
+import com.greenmars.distribuidor.ui.store.product.ProductStoreFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,6 +40,8 @@ class CartFragment : Fragment() {
     private val binding: FragmentCartBinding get() = _binding!!
 
     private lateinit var adapterCart: CartAdapter
+    private lateinit var idstaff: String
+    private lateinit var companyId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,14 +49,38 @@ class CartFragment : Fragment() {
     ): View {
         _binding = FragmentCartBinding.inflate(layoutInflater, container, false)
 
-        viewModelStores.getItemsCart()
-
         initUI()
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragmentInits = ProductStoreFragment()
+                val bundle = Bundle().apply {
+                    putString("idcompany", companyId)
+                    putString("idstaff", idstaff)
+                }
+                fragmentInits.arguments = bundle
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.containerFragments, fragmentInits)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         return binding.root
     }
 
     private fun initUI() {
+
+        ocultarOpciones()
+
+        val bundle = arguments
+        if (bundle != null) {
+            companyId = bundle.getString("idcompany") as String
+            idstaff = bundle.getString("idstaff") as String
+            viewModelStores.getItemsCart(companyId)
+            viewModelCart.getCart(companyId)
+        }
 
         adapterCart = CartAdapter(onItemListener = object : OnItemEventListener {
             override fun onClickAumentarQuantity(item: CartStoreItem) {
@@ -70,7 +101,7 @@ class CartFragment : Fragment() {
         }
 
         binding.btnGuardar.setOnClickListener {
-            val cart = viewModelStores.carts.value
+            val cart = viewModelCart.carts.value
             val itemsCart = viewModelStores.itemsCart.value
             val listItem = itemsCart.map {
                 OrderItemStore(
@@ -96,6 +127,11 @@ class CartFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModelStores.itemsCart.collect {
+                        if (it.isNotEmpty()) {
+                            mostrarOpciones()
+                        } else {
+                            ocultarOpciones()
+                        }
                         adapterCart.update(it)
                     }
                 }
@@ -108,11 +144,26 @@ class CartFragment : Fragment() {
 
                 launch {
                     viewModelCart.messageOrder.collect {
-                        Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        if (it.status != 0) {
+                            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
         }
     }
 
+    private fun mostrarOpciones() {
+        binding.tvTotal.visibility = View.VISIBLE
+        binding.btnGuardar.visibility = View.VISIBLE
+        binding.btnLimpiar.visibility = View.VISIBLE
+        binding.tvNoItems.visibility = View.GONE
+    }
+
+    private fun ocultarOpciones() {
+        binding.tvTotal.visibility = View.GONE
+        binding.btnGuardar.visibility = View.GONE
+        binding.btnLimpiar.visibility = View.GONE
+        binding.tvNoItems.visibility = View.VISIBLE
+    }
 }

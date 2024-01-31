@@ -7,7 +7,7 @@ import com.greenmars.distribuidor.data.database.dao.CartItemDao
 import com.greenmars.distribuidor.data.database.entity.Cart
 import com.greenmars.distribuidor.data.database.entity.CartItem
 
-@Database(entities = [Cart::class, CartItem::class], version = 3)
+@Database(entities = [Cart::class, CartItem::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getCartDao(): CartDao
