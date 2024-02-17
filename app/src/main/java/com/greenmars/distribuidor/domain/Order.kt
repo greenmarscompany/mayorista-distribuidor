@@ -5,5 +5,6 @@ data class Order(
     val status: String,
     val empresa: String,
     val product: String,
+    val phone: String,
     val total: Double
 )

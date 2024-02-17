@@ -153,4 +153,14 @@ class RepositoryStoreImpl @Inject constructor(
             Log.i("store", "Ha ocurrido un error ${it.message}")
         }
     }
+
+    override suspend fun deleteAllItemsCart(cartId: Long) {
+        runCatching {
+            cartItemDao.deleteAllItemCart(cartId)
+        }.onSuccess { res ->
+            Log.i("store", "Se ha eliminado correctamente $res")
+        }.onFailure {
+            Log.i("store", "Ha ocurrido un error ${it.message}")
+        }
+    }
 }

@@ -3,13 +3,34 @@ package com.greenmars.distribuidor;
 public final class Variable {
 
     public static final String TAG = "MayoristaDistribuidor";
-    public static final String HOST_BASE = "http://143.198.54.16";
-    public static final String HOST_BASE_MEDIA = "http://143.198.54.16/media/";
-    //public static final String HOST_BASE = "http://10.0.2.2:8000";
-    public static final String HOST = "http://143.198.54.16/api";
-    // public static final String HOST = "http://10.0.2.2:8000/api";
-    public static final String HOST_RETROFIT = "http://143.198.54.16/api/";
-    //public static final String HOST_RETROFIT = "http://10.0.2.2:8000/api/";
+
+    //Todo !important cambiar a desarrollo
+
+    //Production
+    // public static final String HOST_BASE = "http://143.198.54.16";
+
+    //Desarrollo
+    public static final String HOST_BASE = "http://192.168.1.4:8000";
+
+    //Produccion
+    // public static final String HOST_BASE_MEDIA = "http://143.198.54.16/media/";
+
+    //Desarrollo
+    public static final String HOST_BASE_MEDIA = "http://192.168.1.4:8000/media/";
+
+    //Production
+    // public static final String HOST = "http://143.198.54.16/api";
+
+    //Desarrollo
+    public static final String HOST = "http://192.168.1.4:8000/api";
+
+    //Produccion
+    // public static final String HOST_RETROFIT = "http://143.198.54.16/api/";
+
+    //Desarrollo
+    public static final String HOST_RETROFIT = "http://192.168.1.4:8000/api/";
+
+
     public static final String HOST_NODE = "http://143.198.54.16:9000";
 
     //Email Validation pattern
@@ -17,6 +38,7 @@ public final class Variable {
 
     //Fragments Tags
     public static final String Login_Fragment = "Login_Fragment";
+    public static final String LoginFragment = "LoginFragment";
     public static final String SignUp_Fragment = "SignUp_Fragment";
     public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
     public static final String TipoProveedorFragment = "TipoProveedorFragment";

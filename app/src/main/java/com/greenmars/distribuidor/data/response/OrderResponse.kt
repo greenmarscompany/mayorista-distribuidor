@@ -28,6 +28,7 @@ data class OrderResponse(
             status = status,
             empresa = client.name,
             product = sb.toString(),
+            phone = client.phone,
             total = total
         )
     }
@@ -38,7 +39,9 @@ data class ClientResponse(
     @SerializedName("company_id")
     val companyId: String,
     @SerializedName("name")
-    val name: String
+    val name: String,
+    @SerializedName("phone")
+    val phone: String
 )
 
 data class OrderDetailResponse(

@@ -1,9 +1,11 @@
 package com.greenmars.distribuidor.domain
 
 import com.greenmars.distribuidor.data.model.ProductRegisterStaff
+import com.greenmars.distribuidor.data.request.UpdateState
 import com.greenmars.distribuidor.data.response.ApiImageResponse
 import com.greenmars.distribuidor.data.response.ApiProductResponse
 import com.greenmars.distribuidor.data.response.ApiResponseCore
+import com.greenmars.distribuidor.data.response.ApiResponseTemplate
 import com.greenmars.distribuidor.data.response.CategoryResponse
 import com.greenmars.distribuidor.data.response.OrderResponse
 import com.greenmars.distribuidor.data.response.ResponseLogout
@@ -22,4 +24,7 @@ interface Repository {
     suspend fun getOrders(): List<Order>?
 
     suspend fun saveOrder(order: OrderStore): ResponseMessage?
+    suspend fun updateStateOrder(state: UpdateState): ApiResponseTemplate<String>?
+
+    suspend fun getOrderDetails(orderid: Int): OrderDetailDomain?
 }

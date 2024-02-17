@@ -1,5 +1,7 @@
 package com.greenmars.distribuidor.ui.perfil
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -25,6 +27,7 @@ class PerfilFragment : Fragment() {
     private val binding get() = _binding!!
     private val perfilViewModel: PerfilViewModel by viewModels()
 
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,22 +36,53 @@ class PerfilFragment : Fragment() {
         _binding = FragmentPerfilBinding.inflate(layoutInflater, container, false)
         initUI()
 
-        val db = DatabaseHelper(context)
+        /*val db = DatabaseHelper(context)
         val account: Account = db.acountToken
-        llenarDatos(account)
+        if (account != null) {
+            llenarDatos(account)
+        }*/
+
+        val sharedPreferences =
+            requireContext().getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
+        val userid = sharedPreferences.getLong("iduser", 0L)
+
+        perfilViewModel.getUser(userid)
 
         return binding.root
     }
 
     private fun initUI() {
         logout()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                perfilViewModel.user.collect {
+                    if (it != null) {
+                        binding.apply {
+
+                            tvName.text = it.companyName
+                            tvPhone.text = it.companyPhone
+                            tvRuc.text = it.companyRuc
+                            tvAddress.text = it.companyAddress
+                        }
+
+                    }
+                }
+            }
+        }
     }
 
     private fun logout() {
         val dataBase = DatabaseHelper(context)
-
+        sharedPreferences = requireContext().getSharedPreferences("mi_pref", Context.MODE_PRIVATE)
         binding.lyLogout.setOnClickListener {
+            val editor = sharedPreferences.edit()
+            editor.putLong("iduser", 0)
+            editor.putString("token", "")
+            editor.apply()
+
             dataBase.clearToken()
+            dataBase.deleteLogin()
             perfilViewModel.logoutStaff()
             activity?.finish()
         }
@@ -58,7 +92,6 @@ class PerfilFragment : Fragment() {
     private fun llenarDatos(account: Account) {
         binding.apply {
             tvName.text = account.nombre
-            tvEmail.text = account.email
             tvPhone.text = account.telefono
             tvRuc.text = account.company_ruc
             tvAddress.text = account.direccion

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.perfil.PerfilFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.perfil.PerfilFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,146 +25,124 @@
                 android:text="@string/mis_configuraciones"
                 android:textColor="@color/black"
                 android:textSize="25sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/lightContainer"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp">
 
             <LinearLayout
-                android:padding="15dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <LinearLayout
-                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Nombre"
-                        android:textStyle="bold"
                         android:textColor="@color/textPrimaryColor"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test Nombre"/>
+                        android:text="Test Nombre" />
                 </LinearLayout>
 
-                <View
-                    android:layout_marginBottom="15dp"
+                <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/line_separator_color"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Correo"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimaryColor" android:textSize="14sp"/>
-
-                    <TextView
-                        android:id="@+id/tvEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="aldaelvis@hotmail.com"/>
-
-                </LinearLayout>
-
-                <View
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/line_separator_color"/>
-
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Dirección"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimaryColor" android:textSize="14sp"/>
+                        android:textColor="@color/textPrimaryColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Test Direcion"/>
+                        android:text="Test Direcion" />
                 </LinearLayout>
 
-                <View
-                    android:layout_marginBottom="15dp"
+                <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/line_separator_color"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
-                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Telefono"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimaryColor" android:textSize="14sp"/>
+                        android:textColor="@color/textPrimaryColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="958076028"/>
+                        android:text="958076028" />
                 </LinearLayout>
 
-                <View
-                    android:layout_marginBottom="15dp"
+                <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/line_separator_color"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Ruc"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimaryColor" android:textSize="14sp"/>
+                        android:textColor="@color/textPrimaryColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvRuc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10718472048"/>
+                        android:text="10718472048" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -173,34 +151,34 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/lightContainer"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/lyLogout"
-                android:clickable="true"
-                android:padding="15dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
                 android:layout_height="wrap_content"
-                android:focusable="true">
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="15dp">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/cerrar_sesion"
-                    android:textSize="14sp"
                     android:textColor="@color/textPrimaryColor"
-                    android:layout_weight="1"/>
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/logout_svgrepo_com"/>
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/logout_svgrepo_com" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

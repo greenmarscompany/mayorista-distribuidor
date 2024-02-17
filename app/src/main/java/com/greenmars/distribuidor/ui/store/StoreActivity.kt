@@ -59,9 +59,7 @@ class StoreActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        val account: Account = db.acountToken
-
-        // Todo refactorizar a carritos independientes
+        // val account: Account = db.acountToken
         /*val store = CartStore(
             id = 0,
             clientId = account.company_id

@@ -3,6 +3,7 @@ package com.greenmars.distribuidor.data
 import android.util.Log
 import com.greenmars.distribuidor.data.model.ProductRegisterStaff
 import com.greenmars.distribuidor.data.network.FabricanteApi
+import com.greenmars.distribuidor.data.request.UpdateState
 import com.greenmars.distribuidor.data.response.*
 import com.greenmars.distribuidor.domain.*
 import com.squareup.okhttp.RequestBody
@@ -165,6 +166,30 @@ class RepositoryImpl @Inject constructor(private val apiService: FabricanteApi) 
             apiService.saveOrderStaff(order.toEntity())
         }.onSuccess {
             return it.toDomain()
+        }.onFailure {
+            Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
+        }
+
+        return null
+    }
+
+    override suspend fun updateStateOrder(state: UpdateState): ApiResponseTemplate<String>? {
+        runCatching {
+            apiService.updateStateOrder(state)
+        }.onSuccess {
+            return it
+        }.onFailure {
+            Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
+        }
+
+        return null
+    }
+
+    override suspend fun getOrderDetails(orderid: Int): OrderDetailDomain? {
+        runCatching {
+            apiService.getOrderDetails(orderid)
+        }.onSuccess {
+            return it.data.toDomain()
         }.onFailure {
             Log.i("RepoImpl", "Ha ocurrido un error ${it.message}")
         }

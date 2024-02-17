@@ -3,6 +3,7 @@ package com.greenmars.distribuidor.data.network
 import com.greenmars.distribuidor.data.model.OrderRegister
 import com.greenmars.distribuidor.data.response.*
 import com.greenmars.distribuidor.data.model.ProductRegisterStaff
+import com.greenmars.distribuidor.data.request.UpdateState
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -48,4 +49,10 @@ interface FabricanteApi {
 
     @POST("order-supplier/")
     suspend fun saveOrderStaff(@Body orderData: OrderRegister): ApiResponseMessage
+
+    @GET("order-manufacturer/details/{orderid}")
+    suspend fun getOrderDetails(@Path("orderid") orderid: Int): ApiResponseTemplate<OrderDetailsResponse>
+
+    @POST("order-manufacturer/update-state/")
+    suspend fun updateStateOrder(@Body status: UpdateState): ApiResponseTemplate<String>
 }

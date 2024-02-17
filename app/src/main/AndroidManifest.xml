@@ -27,6 +27,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".ui.detailorder.OrderDetailsActivity"
+            android:theme="@style/AppThemeFabricante"
+            android:exported="false" />
+        <activity
             android:name=".ui.store.StoreActivity"
             android:exported="false"
             android:theme="@style/MiTemaAppBar" />

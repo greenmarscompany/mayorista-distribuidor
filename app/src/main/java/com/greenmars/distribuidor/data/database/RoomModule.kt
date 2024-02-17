@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -22,6 +23,8 @@ object RoomModule {
             .fallbackToDestructiveMigration()
             .build()
 
+
+
     @Singleton
     @Provides
     fun provideCartDao(db: AppDatabase) = db.getCartDao()
@@ -29,4 +32,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideCartItemDao(db: AppDatabase) = db.getCartItemDao()
+
+    @Singleton
+    @Provides
+    fun provideProveedorDao(db: AppDatabase) = db.getProveedorDao()
 }

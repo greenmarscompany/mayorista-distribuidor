@@ -1,7 +1,10 @@
 package com.greenmars.distribuidor
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -20,6 +23,10 @@ class FabricanteActivity : AppCompatActivity() {
 
         binding = ActivityFabricanteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val shared = getSharedPreferences("my_pref", Context.MODE_PRIVATE)
+        Log.i("fabriacti", "token: ${shared.getString("token", "")}")
+
         initUI()
     }
 

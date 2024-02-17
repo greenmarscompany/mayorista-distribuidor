@@ -28,16 +28,16 @@ class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             txtName.text = productStaff.name
             txtDescription.text = productStaff.description
             Glide.with(ivProduct.context)
-                    .load(Variable.HOST_BASE + productStaff.image)
-                    .fitCenter()
-                    .into(ivProduct)
+                .load(Variable.HOST_BASE + productStaff.image)
+                .fitCenter()
+                .into(ivProduct)
 
             if (productStaff.status) {
                 txtStatus.setBackgroundResource(R.drawable.rounded_status)
                 txtStatus.text = "Activado"
             } else {
                 txtStatus.setBackgroundResource(R.drawable.rounded_status_disable)
-                txtStatus.text = "Desactivado"
+                txtStatus.text = "En revisión"
             }
         }
     }

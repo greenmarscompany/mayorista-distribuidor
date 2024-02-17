@@ -100,6 +100,10 @@ class CartFragment : Fragment() {
             adapter = adapterCart
         }
 
+        binding.btnLimpiar.setOnClickListener {
+            completeOrder()
+        }
+
         binding.btnGuardar.setOnClickListener {
             val cart = viewModelCart.carts.value
             val itemsCart = viewModelStores.itemsCart.value
@@ -145,11 +149,19 @@ class CartFragment : Fragment() {
                 launch {
                     viewModelCart.messageOrder.collect {
                         if (it.status != 0) {
+                            completeOrder()
                             Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun completeOrder() {
+        val cart = viewModelCart.carts.value
+        if (cart != null) {
+            viewModelStores.completeOrder(cart.id)
         }
     }
 

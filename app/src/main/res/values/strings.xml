@@ -107,7 +107,6 @@ Todas las notificaciones que deba enviarse conforme a estos Términos y Condicio
     <string name="pedidos">Pedidos</string>
     <string name="productos">Productos</string>
     <string name="perfil">Configuraciones</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="content_description_media">product_supplier</string>
     <string name="title_product">Nombre del producto</string>
@@ -140,5 +139,10 @@ Todas las notificaciones que deba enviarse conforme a estos Términos y Condicio
     <string name="no_hay_items">No hay productos, agregue para ordenar</string>
     <string name="productos_disponibles">Productos disponibles</string>
     <string name="carrito">Carrito</string>
+    <string name="login_contra">Contraseña</string>
+    <string name="login_correo">Correo</string>
+    <string name="login_btn_entrar">ENTRAR</string>
+    <string name="img_logo">Logo mayorista</string>
+    <string name="tips_description_product">Ingrese un producto descriptivo, tomando en cuenta las medidas por ejemplo: Producto 16 unidades, medida: paquete</string>
 
 </resources>

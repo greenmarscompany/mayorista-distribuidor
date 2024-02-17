@@ -118,4 +118,11 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.1")
 
     implementation ("com.nex3z:notification-badge:1.0.4")
+    implementation ("com.auth0.android:jwtdecode:2.0.2")
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    // (see https://github.com/ReactiveX/RxJava/releases for latest 3.x.x version)
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+    implementation ("androidx.room:room-rxjava3:$room_version")
 }

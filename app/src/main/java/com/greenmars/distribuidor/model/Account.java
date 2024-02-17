@@ -23,6 +23,7 @@ public class Account {
     //---
     private String nombre;
     private String company_ruc;
+    private long cloudId;
 
     public Account() {
         this.ID = -1;
@@ -43,6 +44,7 @@ public class Account {
         this.company_ruc = "";
         this.url_facturacion = "";
         this.isSupplier = false;
+        this.cloudId = 0;
     }
 
 
@@ -87,6 +89,14 @@ public class Account {
         this.company_ruc = company_ruc;
         this.url_facturacion = url_facturacion;
         this.isSupplier = isSupplier;
+    }
+
+    public long getCloudId() {
+        return cloudId;
+    }
+
+    public void setCloudId(long cloudId) {
+        this.cloudId = cloudId;
     }
 
     public int getID() {

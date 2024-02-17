@@ -16,4 +16,5 @@ interface RepositoryStore {
     suspend fun getItemCount(cartsId: Long): Int
     suspend fun updateQuantityItem(quantity: Int, itemId: Long)
     suspend fun deleteCartItem(itemId: Long)
+    suspend fun deleteAllItemsCart(cartId: Long)
 }

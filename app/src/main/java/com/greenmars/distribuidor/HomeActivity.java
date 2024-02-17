@@ -3,6 +3,7 @@ package com.greenmars.distribuidor;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -185,6 +186,13 @@ public class HomeActivity extends AppCompatActivity implements TaskLoadedCallbac
     public void desloguearTokenDevice() {
         String url = Variable.HOST + "/staff/cerrar-sesion";
         String token = db.getToken();
+        db.deleteLogin();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "");
+        editor.putLong("iduser", 0L);
+        editor.apply();
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         JSONObject jsonObject = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, response -> {

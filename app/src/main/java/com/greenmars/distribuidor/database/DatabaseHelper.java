@@ -35,6 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_16 = "company_ruc";//company
     private static final String COL_17 = "url_facturacion";
     private static final String COL_18 = "is_supplier";
+    private static final String COL_19 = "cloud_id";
 
     //----
     public DatabaseHelper(@Nullable Context context) {
@@ -45,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLE_NAME + "(" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + COL_2 + " TEXT, " + COL_3 + " TEXT , " + COL_4 + " TEXT, " + COL_5 + " TEXT, " + COL_6 + " TEXT, " + COL_7 + " TEXT, " + COL_8 + " INTEGER, " + COL_9 + " TEXT, " + COL_10 + " TEXT, " + COL_11 + " TEXT, " + COL_12 +
-                " TEXT, " + COL_13 + " TEXT, " + COL_14 + " TEXT, " + COL_15 + " TEXT, " + COL_16 + " TEXT, " + COL_17 + " TEXT, " + COL_18 + " TEXT)");
+                " TEXT, " + COL_13 + " TEXT, " + COL_14 + " TEXT, " + COL_15 + " TEXT, " + COL_16 + " TEXT, " + COL_17 + " TEXT, " + COL_18 + " TEXT," + COL_19 + " TEXT)");
     }
 
     @Override
@@ -76,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_15, cuenta.getNombre());
         contentValues.put(COL_16, cuenta.getCompany_ruc());
         contentValues.put(COL_18, cuenta.isSupplier());
+        contentValues.put(COL_19, cuenta.getCloudId());
         long result = sqLiteDatabase.insert(TABLE_NAME, null, contentValues);
         return result != -1;
     }

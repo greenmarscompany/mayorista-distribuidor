@@ -146,4 +146,15 @@ class StoreActivityViewModel @Inject constructor(
 
         _totalPrices.value = sumTotal
     }
+
+    fun completeOrder(cartId: Long) {
+        viewModelScope.launch {
+            Log.i("vmstore", "Se llamo a completeOrder()")
+            val result = withContext(Dispatchers.IO) {
+                repository.deleteAllItemsCart(cartId)
+            }
+            _itemsCart.value = emptyList()
+            Log.i("vmstore", "Data desde viewmodel: $result")
+        }
+    }
 }
